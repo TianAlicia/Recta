@@ -25,7 +25,7 @@ export default function App() {
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{
     isOpen: boolean;
-    position: { x: number; y: number };
+    position: { x: number; y: number; width?: number; height?: number };
     itemId: number | null;
   }>({
     isOpen: false,
@@ -121,9 +121,16 @@ export default function App() {
   };
 
   const handleItemClick = (itemId: number, event: React.MouseEvent) => {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
     setContextMenu({
       isOpen: true,
-      position: { x: event.clientX, y: event.clientY },
+      position: { 
+        x: rect.left, 
+        y: rect.top,
+        width: rect.width,
+        height: rect.height
+      },
       itemId,
     });
   };

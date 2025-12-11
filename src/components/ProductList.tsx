@@ -71,7 +71,7 @@ export function ProductList({ products, onProductClick }: ProductListProps) {
       {/* Product Grid */}
       <div className="flex-1 overflow-y-auto p-2" style={{ backgroundColor: '#f8f8f8' }}>
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-1.5">
             {filteredProducts.map((product) => (
               <button
                 key={product.id}

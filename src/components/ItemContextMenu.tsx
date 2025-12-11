@@ -1,6 +1,6 @@
 interface ItemContextMenuProps {
   isOpen: boolean;
-  position: { x: number; y: number };
+  position: { x: number; y: number; width?: number; height?: number };
   onClose: () => void;
   onDelete: () => void;
   onDiscount: () => void;
@@ -21,6 +21,11 @@ export function ItemContextMenu({
 }: ItemContextMenuProps) {
   if (!isOpen) return null;
 
+  // 计算菜单位置：在元素左侧
+  const menuWidth = 180;
+  const menuLeft = position.x - menuWidth - 8; // 元素左侧，留8px间距
+  const menuTop = position.y; // 与元素顶部对齐
+
   return (
     <>
       {/* Backdrop */}
@@ -28,10 +33,11 @@ export function ItemContextMenu({
       
       {/* Menu */}
       <div
-        className="fixed z-50 bg-white border-2 border-gray-800 shadow-lg w-[180px]"
+        className="fixed z-50 bg-white border border-gray-300 shadow-lg rounded-lg overflow-hidden"
         style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`
+          left: `${menuLeft}px`,
+          top: `${menuTop}px`,
+          width: `${menuWidth}px`
         }}
       >
         <button
@@ -39,7 +45,7 @@ export function ItemContextMenu({
             onDelete();
             onClose();
           }}
-          className="w-full px-6 py-4 text-left border-b-2 border-gray-800 hover:bg-gray-100 transition-colors"
+          className="w-full px-4 py-3 text-left border-b border-gray-200 hover:bg-gray-50 transition-colors text-sm"
         >
           删除
         </button>
@@ -48,7 +54,7 @@ export function ItemContextMenu({
             onDiscount();
             onClose();
           }}
-          className="w-full px-6 py-4 text-left border-b-2 border-gray-800 hover:bg-gray-100 transition-colors"
+          className="w-full px-4 py-3 text-left border-b border-gray-200 hover:bg-gray-50 transition-colors text-sm"
         >
           折扣
         </button>
@@ -57,7 +63,7 @@ export function ItemContextMenu({
             onNote();
             onClose();
           }}
-          className="w-full px-6 py-4 text-left border-b-2 border-gray-800 hover:bg-gray-100 transition-colors"
+          className="w-full px-4 py-3 text-left border-b border-gray-200 hover:bg-gray-50 transition-colors text-sm"
         >
           备注
         </button>
@@ -67,7 +73,7 @@ export function ItemContextMenu({
               onViewDetails();
               onClose();
             }}
-            className="w-full px-6 py-4 text-left hover:bg-gray-100 transition-colors"
+            className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors text-sm"
           >
             查看详情
           </button>

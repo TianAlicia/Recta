@@ -190,17 +190,11 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
       </div>
 
       {/* 可滚动区域：表单卡片 */}
-      <div className="flex-1 overflow-y-auto p-3" style={{ backgroundColor: '#f8f8f8' }}>
+      <div className="flex-1 overflow-y-auto p-1.5" style={{ backgroundColor: '#f8f8f8' }}>
         {/* 始发地卡片 */}
-        <div className="mb-2 bg-white rounded-[10px] p-3" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+        <div className="mb-1 bg-white rounded-[10px] p-2" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
           <div className="mb-2">始发地</div>
-          <div className="mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">基础地址</span>
-              <button className="text-orange-500 hover:text-orange-600">+</button>
-            </div>
-          </div>
-          <div className="mb-2">
+          <div className="mb-1">
             <input
               type="text"
               placeholder="详细地址"
@@ -250,15 +244,9 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
         </div>
 
         {/* 目的地卡片 */}
-        <div className="mb-2 bg-white rounded-[10px] p-3" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+        <div className="mb-1 bg-white rounded-[10px] p-1.5" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
           <div className="mb-2">目的地</div>
-          <div className="mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">基础地址</span>
-              <button className="text-orange-500 hover:text-orange-600">+</button>
-            </div>
-          </div>
-          <div className="mb-2">
+          <div className="mb-1">
             <input
               type="text"
               placeholder="详细地址"
@@ -308,9 +296,9 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
         </div>
 
         {/* 包裹尺寸和重量卡片 */}
-        <div className="mb-2 bg-white rounded-[10px] p-3" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-          <div className="mb-2">包裹尺寸和重量</div>
-          <div className="grid grid-cols-4 gap-2">
+        <div className="mb-1 bg-white rounded-[10px] p-1" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+          <div className="mb-1">包裹尺寸和重量</div>
+          <div className="grid grid-cols-4 gap-1">
             <div>
               <label className="block text-sm text-gray-600 mb-1">长 (cm) *</label>
               <input
@@ -351,8 +339,8 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
         </div>
 
         {/* 物品类型和包裹数量卡片 */}
-        <div className="mb-2 bg-white rounded-[10px] p-3" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-          <div className="grid grid-cols-2 gap-2">
+        <div className="mb-1 bg-white rounded-[10px] p-1" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+          <div className="grid grid-cols-2 gap-1">
             <div>
               <label className="block text-sm text-gray-600 mb-1">物品类型</label>
               <input
@@ -378,44 +366,46 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
       {/* 固定底部区域：快递公司选择、服务类型、增值服务 + 底部操作栏 */}
       <div className="border-t border-gray-200" style={{ backgroundColor: '#f8f8f8' }}>
         {/* 快递公司选择、服务类型、增值服务卡片 - 增加50% */}
-        <div className="p-3">
+        <div className="p-1">
           {/* 快递公司选择和服务类型卡片 */}
-          <div className="mb-2">
+        <div className="mb-1 rounded-[10px] p-1" style={{ backgroundColor: 'F9FAFB', boxShadow: '0 2px 2px rgba(0,0,0,0.05)' }}>
+          
+          <div className="mb-1">
             {/* 快递公司选择 */}
-            <div className="mb-3">
-              <div className="grid grid-cols-5 gap-3 mb-3">
+            <div className="mb-1">
+              <div className="grid grid-cols-5 gap-1 mb-1">
                 {couriers.slice(0, 5).map((courier) => (
                   <button
                     key={courier.id}
                     onClick={() => setSelectedCourier(courier.id)}
-                    className={`p-3.5 border-2 rounded text-center relative ${
+                    className={`p-1.5 border-2 rounded text-center relative overflow-hidden min-w-0 ${
                       selectedCourier === courier.id
                         ? 'border-orange-500 bg-orange-50'
                         : 'border-gray-200 hover:border-gray-300 bg-white'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm">{courier.name}</span>
-                      <img src={courierIcons[courier.id]} alt={courier.name} className="w-6 h-7 object-contain" />
+                    <div className="flex items-center justify-between mb-1.5 min-w-0">
+                      <span className="text-sm truncate flex-shrink-0">{courier.name}</span>
+                      <img src={courierIcons[courier.id]} alt={courier.name} className="w-6 h-7 object-contain flex-shrink-0 ml-1" />
                     </div>
                     <div className="text-orange-500 text-sm">€{courier.price.toFixed(2)}</div>
                   </button>
                 ))}
               </div>
-              <div className="grid grid-cols-5 gap-3">
-                {couriers.slice(5).map((courier) => (
+              <div className="grid grid-cols-5 gap-1">
+                {couriers.slice(5).map((courier, index) => (
                   <button
                     key={courier.id}
                     onClick={() => setSelectedCourier(courier.id)}
-                    className={`p-3.5 border-2 rounded text-center relative ${
+                    className={`p-3.5 border-2 rounded text-center relative overflow-hidden min-w-0 ${
                       selectedCourier === courier.id
                         ? 'border-orange-500 bg-orange-50'
                         : 'border-gray-200 hover:border-gray-300 bg-white'
-                    }`}
+                    } ${index >= 1 ? 'hidden' : ''}`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm">{courier.name}</span>
-                      <img src={courierIcons[courier.id]} alt={courier.name} className="w-6 h-7 object-contain" />
+                    <div className="flex items-center justify-between mb-1.5 min-w-0">
+                      <span className="text-sm truncate flex-shrink-0">{courier.name}</span>
+                      <img src={courierIcons[courier.id]} alt={courier.name} className="w-6 h-7 object-contain flex-shrink-0 ml-1" />
                     </div>
                     <div className="text-orange-500 text-sm">€{courier.price.toFixed(2)}</div>
                   </button>
@@ -426,20 +416,20 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
             {/* 服务类型 */}
             <div>
               <div className="mb-2 text-sm">服务类型</div>
-              <div className="grid grid-cols-5 gap-3">
+              <div className="grid grid-cols-5 gap-1">
                 {services.map((service) => (
                   <button
                     key={service.id}
                     onClick={() => setSelectedService(service.id)}
-                    className={`p-3.5 border-2 rounded text-center relative ${
+                    className={`p-3.5 border-2 rounded text-center relative overflow-hidden min-w-0 ${
                       selectedService === service.id
                         ? 'border-orange-500 bg-orange-50'
                         : 'border-gray-200 hover:border-gray-300 bg-white'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm">{service.name}</span>
-                      {service.logo && <span className="text-lg">{service.logo}</span>}
+                    <div className="flex items-center justify-between mb-1.5 min-w-0">
+                      <span className="text-sm truncate flex-shrink-0">{service.name}</span>
+                      {service.logo && <span className="text-lg flex-shrink-0 ml-1">{service.logo}</span>}
                     </div>
                     <div className="text-orange-500 text-sm">€{service.price.toFixed(2)}</div>
                   </button>
@@ -447,11 +437,12 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
               </div>
             </div>
           </div>
+        </div>
 
           {/* 增值服务卡片 */}
-          <div className="bg-white rounded-[10px] p-3" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+          <div className="mb-1 rounded-[10px] p-1" style={{ backgroundColor: 'F9FAFB', boxShadow: '0 2px 2px rgba(0,0,0,0.05)' }}>
             <div className="mb-2 text-sm">增值服务</div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-1">
               {addons.map((addon) => (
                 <button
                   key={addon.id}
@@ -459,7 +450,7 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
                   className={`p-2.5 border-2 rounded text-center ${
                     selectedAddons.includes(addon.id)
                       ? 'border-orange-500 bg-orange-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      : 'bg-white hover:border-gray-300'
                   }`}
                 >
                   <div className="mb-1 text-sm">{addon.name}</div>
@@ -471,9 +462,9 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
         </div>
 
         {/* 底部操作栏 - 三个卡片 */}
-        <div className="p-3 border-t border-gray-200 flex items-center gap-3 origin-top" style={{ backgroundColor: '#f8f8f8', transform: 'scaleY(0.75)' }}>
+        <div className="p-1 border-t border-gray-200 flex items-center gap-1 origin-top" style={{ backgroundColor: '#f8f8f8' }}>
           {/* 清空卡片 */}
-          <div className="flex-1 bg-gray-400 rounded-[10px] p-4 flex items-center justify-center" style={{ backgroundColor: '#9CA3AF' }}>
+          <div className="flex-1 bg-gray-400 rounded-[10px] p-2 flex items-center justify-center" style={{ backgroundColor: '#9CA3AF' }}>
             <button
               onClick={handleClear}
               className="text-white hover:text-gray-100 text-lg font-medium"
@@ -483,7 +474,7 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
           </div>
           
           {/* 金钱卡片 */}
-          <div className="flex-1 bg-white rounded-[10px] p-4 flex items-center justify-center" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+          <div className="flex-1 bg-white rounded-[10px] p-2 flex items-center justify-center" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
             <div className="flex items-center gap-2">
               <span className="text-gray-400 text-2xl">€</span>
               <span className="text-3xl text-orange-500">{calculateTotal().toFixed(2).replace('.', ',')}</span>
@@ -491,7 +482,7 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
           </div>
           
           {/* 添加卡片 */}
-          <div className="flex-1 bg-orange-500 rounded-[10px] p-4 flex items-center justify-center">
+          <div className="flex-1 bg-orange-500 rounded-[10px] p-2 flex items-center justify-center">
             <button
               onClick={handleAddOrder}
               className="text-white hover:text-orange-100 text-lg font-medium"

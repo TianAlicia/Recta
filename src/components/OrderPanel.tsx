@@ -118,11 +118,12 @@ export function OrderPanel({ orderItems, total, onDeleteItem, onItemClick }: Ord
       </div>
 
       {/* Total Section */}
-      <div className="px-3 py-3 border-t-2 border-gray-200">
+      
         <div className="flex items-center justify-end mb-2">
           <span className="text-gray-600 mr-2">合计:</span>
           <span className="text-orange-500 text-xl">€{total.toFixed(2)}</span>
         </div>
+        <div className="px-3 py-3 border-t-2 border-gray-200">
         <div className="text-right text-3xl">{convertToChineseAmount(total)}</div>
       </div>
     </div>
