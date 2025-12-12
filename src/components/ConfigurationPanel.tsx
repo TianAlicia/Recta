@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
-import upsIcon from '../../iconRecta/ups.svg';
-import fedexIcon from '../../iconRecta/fedex.svg';
-import correoIcon from '../../iconRecta/GroupCorreo.svg';
-import seurIcon from '../../iconRecta/g4193seur.svg';
-import cttIcon from '../../iconRecta/CTT logo.svg';
-import mrwIcon from '../../iconRecta/MRW logo.svg';
-import glsIcon from '../../iconRecta/GroupGLS.svg';
+import upsIcon from '../iconRecta/ups.svg';
+import fedexIcon from '../iconRecta/fedex.svg';
+import correoIcon from '../iconRecta/GroupCorreo.svg';
+import seurIcon from '../iconRecta/g4193seur.svg';
+import cttIcon from '../iconRecta/CTT logo.svg';
+import mrwIcon from '../iconRecta/MRW logo.svg';
+import glsIcon from '../iconRecta/GroupGLS.svg';
+
+import { TrashIcon } from './icons/TrashIcon';
 
 interface ConfigurationPanelProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onAddOrder: (orderData: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   viewingOrderData?: any;
 }
 
@@ -47,6 +51,7 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
   // Load viewing order data when it changes
   useEffect(() => {
     if (viewingOrderData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         senderBaseAddress: '',
         senderDetailAddress: '',
@@ -73,7 +78,8 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
 
   const tabs = ['Marco', 'Lluvia', 'Lluvia', 'Lluvia', 'Lluvia', 'Lluvia'];
   
-  const courierIcons: Record<string, string> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const courierIcons: Record<string, any> = {
     'UPS': upsIcon,
     'FEDEX': fedexIcon,
     'CORREO': correoIcon,
@@ -93,10 +99,10 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
     { id: 'GLS', name: 'GLS', price: 1.50 },
   ];
 
-  const services = [
+  const services: { id: string; name: string; price: number; logo?: string }[] = [
     { id: 'EXPRESS', name: 'EXPRESS', price: 1.50 },
     { id: 'AIR', name: 'AIR', price: 1.50 },
-    { id: '24H', name: '24H', price: 1.50, logo: '🟤' },
+    { id: '24H', name: '24H', price: 1.50 },
   ];
 
   const addons = [
@@ -171,192 +177,199 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
   };
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full gap-1">
       {/* Tabs */}
-      <div className="flex border-b border-gray-200">
-        {tabs.map((tab, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveTabIndex(index)}
-            className={`px-6 py-3 text-sm ${
-              activeTabIndex === index
-                ? 'bg-orange-500 text-white border-2 border-orange-500'
-                : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
+      <div className="bg-[#f9fafb] rounded-sm">
+        <div className="text-[#364153] text-xs mb-2">已填写</div>
+        <div className="flex gap-0.5 overflow-x-auto">
+          {tabs.map((tab, index) => (
+            <div key={index} className="relative group shrink-0">
+              <button
+                onClick={() => setActiveTabIndex(index)}
+                className={`w-24 flex flex-col justify-between p-1 rounded border transition-colors text-left relative ${
+                  activeTabIndex === index
+                    ? 'border-transparent ring-[1.5px] ring-inset ring-orange-500 bg-orange-50'
+                    : 'border-gray-200 bg-white hover:bg-gray-50'
+                }`}
+              >
+                <div className="text-[#364153] text-base truncate w-full">{tab}</div>
+                <div className="flex justify-end w-full">
+                  <TrashIcon className="text-gray-400 hover:text-red-600 transition-colors" width={10} height={12} />
+                </div>
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* 可滚动区域：表单卡片 */}
-      <div className="flex-1 overflow-y-auto p-1.5" style={{ backgroundColor: '#f8f8f8' }}>
+      <div className="flex-1 flex flex-col overflow-y-auto rounded-sm gap-0.5">
         {/* 始发地卡片 */}
-        <div className="mb-1 bg-white rounded-[10px] p-2" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-          <div className="mb-2">始发地</div>
-          <div className="mb-1">
+        <div className="bg-white rounded-sm p-3">
+          <div className="text-xs mb-2">始发地</div>
+          <div className="mb-2">
             <input
               type="text"
               placeholder="详细地址"
               value={formData.senderDetailAddress}
               onChange={(e) => handleInputChange('senderDetailAddress', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+              className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
             />
           </div>
           <div className="grid grid-cols-4 gap-2">
             <div>
-              <label className="block text-sm text-gray-600 mb-1">国家</label>
+              <label className="block text-xs text-gray-600 mb-1">国家</label>
               <input
                 type="text"
                 value={formData.senderCountry}
                 onChange={(e) => handleInputChange('senderCountry', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">邮编 *</label>
+              <label className="block text-xs text-gray-600 mb-1">邮编 *</label>
               <input
                 type="text"
                 value={formData.senderPostcode}
                 onChange={(e) => handleInputChange('senderPostcode', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">寄件人 *</label>
+              <label className="block text-xs text-gray-600 mb-1">寄件人 *</label>
               <input
                 type="text"
                 value={formData.senderName}
                 onChange={(e) => handleInputChange('senderName', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">联系电话 *</label>
+              <label className="block text-xs text-gray-600 mb-1">联系电话 *</label>
               <input
                 type="text"
                 value={formData.senderPhone}
                 onChange={(e) => handleInputChange('senderPhone', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
           </div>
         </div>
 
         {/* 目的地卡片 */}
-        <div className="mb-1 bg-white rounded-[10px] p-1.5" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-          <div className="mb-2">目的地</div>
-          <div className="mb-1">
+        <div className="bg-white rounded-sm p-3">
+          <div className="text-xs mb-2">目的地</div>
+          <div className="mb-2">
             <input
               type="text"
               placeholder="详细地址"
               value={formData.receiverDetailAddress}
               onChange={(e) => handleInputChange('receiverDetailAddress', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+              className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
             />
           </div>
           <div className="grid grid-cols-4 gap-2">
             <div>
-              <label className="block text-sm text-gray-600 mb-1">国家</label>
+              <label className="block text-xs text-gray-600 mb-1">国家</label>
               <input
                 type="text"
                 value={formData.receiverCountry}
                 onChange={(e) => handleInputChange('receiverCountry', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">邮编 *</label>
+              <label className="block text-xs text-gray-600 mb-1">邮编 *</label>
               <input
                 type="text"
                 value={formData.receiverPostcode}
                 onChange={(e) => handleInputChange('receiverPostcode', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">收件人 *</label>
+              <label className="block text-xs text-gray-600 mb-1">收件人 *</label>
               <input
                 type="text"
                 value={formData.receiverName}
                 onChange={(e) => handleInputChange('receiverName', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">联系电话 *</label>
+              <label className="block text-xs text-gray-600 mb-1">联系电话 *</label>
               <input
                 type="text"
                 value={formData.receiverPhone}
                 onChange={(e) => handleInputChange('receiverPhone', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
           </div>
         </div>
 
         {/* 包裹尺寸和重量卡片 */}
-        <div className="mb-1 bg-white rounded-[10px] p-1" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-          <div className="mb-1">包裹尺寸和重量</div>
+        <div className="bg-white rounded-sm p-3">
+          <div className="text-xs mb-2">包裹尺寸和重量</div>
           <div className="grid grid-cols-4 gap-1">
             <div>
-              <label className="block text-sm text-gray-600 mb-1">长 (cm) *</label>
+              <label className="block text-xs text-gray-600 mb-1">长 (cm) *</label>
               <input
                 type="text"
                 value={formData.length}
                 onChange={(e) => handleInputChange('length', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">宽 (cm) *</label>
+              <label className="block text-xs text-gray-600 mb-1">宽 (cm) *</label>
               <input
                 type="text"
                 value={formData.width}
                 onChange={(e) => handleInputChange('width', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">高 (cm) *</label>
+              <label className="block text-xs text-gray-600 mb-1">高 (cm) *</label>
               <input
                 type="text"
                 value={formData.height}
                 onChange={(e) => handleInputChange('height', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">重量 (Kg) *</label>
+              <label className="block text-xs text-gray-600 mb-1">重量 (Kg) *</label>
               <input
                 type="text"
                 value={formData.weight}
                 onChange={(e) => handleInputChange('weight', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
           </div>
         </div>
 
         {/* 物品类型和包裹数量卡片 */}
-        <div className="mb-1 bg-white rounded-[10px] p-1" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+        <div className="bg-white rounded-sm p-3">
           <div className="grid grid-cols-2 gap-1">
             <div>
-              <label className="block text-sm text-gray-600 mb-1">物品类型</label>
+              <label className="block text-xs text-gray-600 mb-1">物品类型</label>
               <input
                 type="text"
                 value={formData.itemType}
                 onChange={(e) => handleInputChange('itemType', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">包裹数量</label>
+              <label className="block text-xs text-gray-600 mb-1">包裹数量</label>
               <input
                 type="text"
                 value={formData.packageCount}
                 onChange={(e) => handleInputChange('packageCount', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
           </div>
@@ -364,50 +377,32 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
       </div>
 
       {/* 固定底部区域：快递公司选择、服务类型、增值服务 + 底部操作栏 */}
-      <div className="border-t border-gray-200" style={{ backgroundColor: '#f8f8f8' }}>
+      <div>
         {/* 快递公司选择、服务类型、增值服务卡片 - 增加50% */}
-        <div className="p-1">
+        <div className="bg-gray-100 rounded-sm">
           {/* 快递公司选择和服务类型卡片 */}
-        <div className="mb-1 rounded-[10px] p-1" style={{ backgroundColor: 'F9FAFB', boxShadow: '0 2px 2px rgba(0,0,0,0.05)' }}>
+        <div className="mb-1 rounded-sm" style={{ backgroundColor: 'F9FAFB', boxShadow: '0 2px 2px rgba(0,0,0,0.05)' }}>
           
           <div className="mb-1">
             {/* 快递公司选择 */}
             <div className="mb-1">
-              <div className="grid grid-cols-5 gap-1 mb-1">
-                {couriers.slice(0, 5).map((courier) => (
+              <div className="grid grid-cols-5 gap-0.5 mb-1">
+                {couriers.map((courier) => (
                   <button
                     key={courier.id}
                     onClick={() => setSelectedCourier(courier.id)}
-                    className={`p-1.5 border-2 rounded text-center relative overflow-hidden min-w-0 ${
-                      selectedCourier === courier.id
-                        ? 'border-orange-500 bg-orange-50'
-                        : 'border-gray-200 hover:border-gray-300 bg-white'
-                    }`}
+                  className={`p-1.5 border rounded text-center font-medium relative overflow-hidden min-w-0 transition-colors flex flex-col justify-between h-[60px] ${
+                    selectedCourier === courier.id
+                      ? 'border-transparent ring-[1.5px] ring-inset ring-orange-500 bg-orange-50'
+                      : 'border-gray-200 hover:bg-gray-100 bg-white'
+                  }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5 min-w-0">
-                      <span className="text-sm truncate flex-shrink-0">{courier.name}</span>
-                      <img src={courierIcons[courier.id]} alt={courier.name} className="w-6 h-7 object-contain flex-shrink-0 ml-1" />
+                    <div className="flex items-start justify-between w-full">
+                      <span className="text-sm truncate">{courier.name}</span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={courierIcons[courier.id].src} alt={courier.name} className="w-18 h-6 object-contain ml-1" />
                     </div>
-                    <div className="text-orange-500 text-sm">€{courier.price.toFixed(2)}</div>
-                  </button>
-                ))}
-              </div>
-              <div className="grid grid-cols-5 gap-1">
-                {couriers.slice(5).map((courier, index) => (
-                  <button
-                    key={courier.id}
-                    onClick={() => setSelectedCourier(courier.id)}
-                    className={`p-3.5 border-2 rounded text-center relative overflow-hidden min-w-0 ${
-                      selectedCourier === courier.id
-                        ? 'border-orange-500 bg-orange-50'
-                        : 'border-gray-200 hover:border-gray-300 bg-white'
-                    } ${index >= 1 ? 'hidden' : ''}`}
-                  >
-                    <div className="flex items-center justify-between mb-1.5 min-w-0">
-                      <span className="text-sm truncate flex-shrink-0">{courier.name}</span>
-                      <img src={courierIcons[courier.id]} alt={courier.name} className="w-6 h-7 object-contain flex-shrink-0 ml-1" />
-                    </div>
-                    <div className="text-orange-500 text-sm">€{courier.price.toFixed(2)}</div>
+                    <div className="text-orange-500 text-xs text-right w-full">€{courier.price.toFixed(2)}</div>
                   </button>
                 ))}
               </div>
@@ -415,23 +410,23 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
 
             {/* 服务类型 */}
             <div>
-              <div className="mb-2 text-sm">服务类型</div>
-              <div className="grid grid-cols-5 gap-1">
+              <div className="mb-2 text-xs">服务类型</div>
+              <div className="grid grid-cols-5 gap-0.5">
                 {services.map((service) => (
                   <button
                     key={service.id}
                     onClick={() => setSelectedService(service.id)}
-                    className={`p-3.5 border-2 rounded text-center relative overflow-hidden min-w-0 ${
-                      selectedService === service.id
-                        ? 'border-orange-500 bg-orange-50'
-                        : 'border-gray-200 hover:border-gray-300 bg-white'
-                    }`}
+                  className={`p-2 border rounded text-center font-medium relative overflow-hidden min-w-0 transition-colors flex flex-col justify-between h-[60px] ${
+                    selectedService === service.id
+                      ? 'border-transparent ring-[1.5px] ring-inset ring-orange-500 bg-orange-50'
+                      : 'border-gray-200 hover:bg-gray-100 bg-white'
+                  }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5 min-w-0">
-                      <span className="text-sm truncate flex-shrink-0">{service.name}</span>
-                      {service.logo && <span className="text-lg flex-shrink-0 ml-1">{service.logo}</span>}
+                    <div className="flex items-start justify-between w-full">
+                      <span className="text-sm truncate">{service.name}</span>
+                      {service.logo && <span className="text-lg ml-1">{service.logo}</span>}
                     </div>
-                    <div className="text-orange-500 text-sm">€{service.price.toFixed(2)}</div>
+                    <div className="text-orange-500 text-xs text-right w-full">€{service.price.toFixed(2)}</div>
                   </button>
                 ))}
               </div>
@@ -440,21 +435,21 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
         </div>
 
           {/* 增值服务卡片 */}
-          <div className="mb-1 rounded-[10px] p-1" style={{ backgroundColor: 'F9FAFB', boxShadow: '0 2px 2px rgba(0,0,0,0.05)' }}>
-            <div className="mb-2 text-sm">增值服务</div>
-            <div className="grid grid-cols-4 gap-1">
+          <div className="mb-1 rounded-sm" style={{ backgroundColor: 'F9FAFB', boxShadow: '0 2px 2px rgba(0,0,0,0.05)' }}>
+            <div className="mb-2 text-xs">增值服务</div>
+            <div className="grid grid-cols-8 gap-0.5">
               {addons.map((addon) => (
                 <button
                   key={addon.id}
                   onClick={() => toggleAddon(addon.id)}
-                  className={`p-2.5 border-2 rounded text-center ${
+                  className={`p-1 border rounded text-center transition-colors flex flex-col justify-between h-12 ${
                     selectedAddons.includes(addon.id)
-                      ? 'border-orange-500 bg-orange-50'
-                      : 'bg-white hover:border-gray-300'
+                      ? 'border-transparent ring-[1.5px] ring-inset ring-orange-500 bg-orange-50'
+                      : 'bg-white border-gray-200 hover:bg-gray-100'
                   }`}
                 >
-                  <div className="mb-1 text-sm">{addon.name}</div>
-                  <div className="text-orange-500 text-sm">+ €{addon.price.toFixed(2)}</div>
+                  <div className="text-xs text-left w-full">{addon.name}</div>
+                  <div className="text-orange-500 text-xs text-right w-full">+ €{addon.price.toFixed(2)}</div>
                 </button>
               ))}
             </div>
@@ -462,27 +457,25 @@ export function ConfigurationPanel({ onAddOrder, viewingOrderData }: Configurati
         </div>
 
         {/* 底部操作栏 - 三个卡片 */}
-        <div className="p-1 border-t border-gray-200 flex items-center gap-1 origin-top" style={{ backgroundColor: '#f8f8f8' }}>
+        <div className="flex items-stretch gap-1 origin-top">
           {/* 清空卡片 */}
-          <div className="flex-1 bg-gray-400 rounded-[10px] p-2 flex items-center justify-center" style={{ backgroundColor: '#9CA3AF' }}>
+          <div className="flex-1 bg-gray-100 rounded-tl-sm p-2 flex items-center justify-center">
             <button
               onClick={handleClear}
-              className="text-white hover:text-gray-100 text-lg font-medium"
+              className="text-red-600 hover:text-gray-100 text-lg font-medium"
             >
               清空
             </button>
           </div>
           
           {/* 金钱卡片 */}
-          <div className="flex-1 bg-white rounded-[10px] p-2 flex items-center justify-center" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-400 text-2xl">€</span>
-              <span className="text-3xl text-orange-500">{calculateTotal().toFixed(2).replace('.', ',')}</span>
-            </div>
+          <div className="flex-1 bg-white p-2 flex items-center justify-between" style={{ boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+            <span className="text-gray-400 text-2xl">€</span>
+            <span className="text-2xl text-orange-500">{calculateTotal().toFixed(2).replace('.', ',')}</span>
           </div>
           
           {/* 添加卡片 */}
-          <div className="flex-1 bg-orange-500 rounded-[10px] p-2 flex items-center justify-center">
+          <div className="flex-1 bg-orange-500 rounded-tr-sm p-2 flex items-center justify-center">
             <button
               onClick={handleAddOrder}
               className="text-white hover:text-orange-100 text-lg font-medium"

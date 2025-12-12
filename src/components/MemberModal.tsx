@@ -59,7 +59,7 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-white w-[90%] max-w-5xl max-h-[90vh] overflow-hidden rounded-lg shadow-xl" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="p-4 border-b border-gray-200">
@@ -75,7 +75,7 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
                 type="text"
                 value={searchData.id}
                 onChange={(e) => setSearchData({ ...searchData, id: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
@@ -84,7 +84,7 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
                 type="text"
                 value={searchData.name}
                 onChange={(e) => setSearchData({ ...searchData, name: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
@@ -93,7 +93,7 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
                 type="text"
                 value={searchData.phone}
                 onChange={(e) => setSearchData({ ...searchData, phone: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
@@ -102,7 +102,7 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
                 type="text"
                 value={searchData.wechat1}
                 onChange={(e) => setSearchData({ ...searchData, wechat1: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
             <div>
@@ -111,7 +111,7 @@ export function MemberModal({ isOpen, onClose }: MemberModalProps) {
                 type="text"
                 value={searchData.wechat2}
                 onChange={(e) => setSearchData({ ...searchData, wechat2: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-2 py-1 border border-gray-200 rounded text-sm"
               />
             </div>
           </div>

@@ -14,6 +14,7 @@ export function NoteModal({ isOpen, onClose, onSave, currentNote = '', itemName 
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setNote(currentNote);
     }
   }, [isOpen, currentNote]);
@@ -26,7 +27,7 @@ export function NoteModal({ isOpen, onClose, onSave, currentNote = '', itemName 
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
       <div className="bg-white w-[480px] rounded-lg shadow-xl p-6" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
@@ -48,7 +49,7 @@ export function NoteModal({ isOpen, onClose, onSave, currentNote = '', itemName 
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none"
+            className="w-full px-2 py-1 border border-gray-200 rounded-lg resize-none"
             rows={4}
             placeholder="请输入备注信息..."
           />

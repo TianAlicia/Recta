@@ -5,7 +5,35 @@ export interface Product {
   name: string;
   price: number;
   image?: string;
+  category?: string;
 }
+
+export interface OrderItem {
+  id: number;
+  name: string;
+  origin?: string;
+  destination?: string;
+  originPostcode?: string;
+  destPostcode?: string;
+  details?: string;
+  weight?: string;
+  type?: string;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+  itemDiscount?: number;
+  discountedPrice?: number;
+  note?: string;
+}
+
+export interface ShippingService {
+  id: string;
+  name: string;
+  icon: string;
+  price: number;
+  logo?: string;
+}
+
 
 // Mock data
 const mockProducts: Product[] = [

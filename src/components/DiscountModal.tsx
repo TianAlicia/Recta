@@ -44,7 +44,7 @@ export function DiscountModal({ isOpen, onClose, onApplyDiscount, currentDiscoun
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={handleCancel}>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={handleCancel}>
       <div className="bg-white w-[500px] rounded-lg shadow-xl p-6" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">

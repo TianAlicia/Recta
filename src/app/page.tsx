@@ -1,22 +1,25 @@
-import { useState, useEffect } from 'react';
-import { ProductList } from './components/ProductList';
-import { ConfigurationPanel } from './components/ConfigurationPanel';
-import { OrderPanel } from './components/OrderPanel';
-import { Keypad } from './components/Keypad';
-import { MemberModal } from './components/MemberModal';
-import { PaymentModal } from './components/PaymentModal';
-import { DiscountModal } from './components/DiscountModal';
-import { ItemContextMenu } from './components/ItemContextMenu';
-import { NoteModal } from './components/NoteModal';
-import * as mockApi from './services/mockApi';
+'use client';
 
-export default function App() {
+import { useState, useEffect } from 'react';
+import { ProductList } from '@/components/ProductList';
+import { ConfigurationPanel } from '@/components/ConfigurationPanel';
+import { OrderPanel } from '@/components/OrderPanel';
+import { Keypad } from '@/components/Keypad';
+import { MemberModal } from '@/components/MemberModal';
+import { PaymentModal } from '@/components/PaymentModal';
+import { DiscountModal } from '@/components/DiscountModal';
+import { ItemContextMenu } from '@/components/ItemContextMenu';
+import { NoteModal } from '@/components/NoteModal';
+import * as mockApi from '@/services/mockApi';
+
+export default function Home() {
   const [products, setProducts] = useState<mockApi.Product[]>([]);
   const [orderItems, setOrderItems] = useState<mockApi.OrderItem[]>([]);
   const [total, setTotal] = useState(0);
   const [originalTotal, setOriginalTotal] = useState(0);
   const [discountPercent, setDiscountPercent] = useState(0);
   const [inputValue, setInputValue] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -32,6 +35,7 @@ export default function App() {
     position: { x: 0, y: 0 },
     itemId: null,
   });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [viewingOrderData, setViewingOrderData] = useState<any>(null);
   const [nextOrderId, setNextOrderId] = useState(5);
 
@@ -92,6 +96,7 @@ export default function App() {
     setNextOrderId(prev => prev + 1);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAddOrderFromConfig = (orderData: any) => {
     const newItem: mockApi.OrderItem = {
       id: nextOrderId,
@@ -216,19 +221,19 @@ export default function App() {
   const currentItem = orderItems.find(i => i.id === contextMenu.itemId);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-200 gap-1">
       {/* Left Panel - Products */}
-      <div className="w-[300px] bg-white border-r border-gray-200 overflow-y-auto">
+      <div className="w-[300px]">
         <ProductList products={products} onProductClick={handleProductClick} />
       </div>
 
       {/* Middle Panel - Configuration */}
-      <div className="flex-1 bg-white border-r border-gray-200 overflow-y-auto">
+      <div className="flex-1">
         <ConfigurationPanel onAddOrder={handleAddOrderFromConfig} viewingOrderData={viewingOrderData} />
       </div>
 
       {/* Right Panel - Order & Keypad */}
-      <div className="w-[380px] flex flex-col bg-white">
+      <div className="w-[380px] flex flex-col gap-[1px]">
         <OrderPanel 
           orderItems={orderItems} 
           total={total} 
